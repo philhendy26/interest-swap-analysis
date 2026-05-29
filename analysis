@@ -1,0 +1,42 @@
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+
+# Market Data (May 29, 2026)
+tenors = [2, 5, 10]
+swap_rates = [0.0418, 0.0417, 0.0444]   # Fixed SONIA swap rates
+sonia_spread = 0.0150                    # Debt margin over SONIA
+notional = 180_000_000
+
+# Create DataFrame
+df = pd.DataFrame({
+    'Tenor (Years)': tenors,
+    'Fixed Swap Rate (%)': [r * 100 for r in swap_rates],
+    'Floating Debt Cost (est.)': [((r + 0.015) * 100) for r in swap_rates],  # Approx
+    'Annual Fixed Payment (£m)': [notional * r / 1_000_000 for r in swap_rates]
+})
+
+print("=== UK Interest Rate Swap Analysis - Thames Valley Solar Farm ===\n")
+print(df.round(3))
+
+# Valuation: Simple NPV of fixed vs floating (assuming flat forward curve for demo)
+def swap_npv(fixed_rate, tenor, notional, discount_rate=0.042):
+    """Simple NPV of receiving floating, paying fixed"""
+    periods = int(tenor * 2)  # semi-annual
+    fixed_cf = notional * fixed_rate / 2
+    npv = 0
+    for t in range(1, periods + 1):
+        npv -= fixed_cf / (1 + discount_rate/2)**t
+        npv += (notional * 0.042 / 2) / (1 + discount_rate/2)**t   # assumed floating
+    return npv + notional / (1 + discount_rate/2)**periods - notional  # par adjustment
+
+df['Swap NPV (£)'] = [swap_npv(r, t, notional) for r, t in zip(swap_rates, tenors)]
+
+print("\nSwap Valuation (NPV from payer perspective):")
+print(df[['Tenor (Years)', 'Swap NPV (£)']].round(0))
+
+# Recommendation Score
+df['Score'] = df['Fixed Swap Rate (%)'] * 0.4 + (df['Tenor (Years)'] / 10) * 30  # lower rate + appropriate tenor
+best = df.loc[df['Score'].idxmin()]
+
+print(f"\n🏆 Recommended Swap: {best['Tenor (Years)']}-Year at {best['Fixed Swap Rate (%)']:.2f}%")
