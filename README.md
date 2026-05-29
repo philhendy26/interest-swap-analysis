@@ -27,7 +27,7 @@ Medium-term hedge (5Y Swap) – Covers full construction + early operations
 Long-term hedge (10Y Swap) – Full project life cycle protection
 
 
-## Sample Output (Run the code above):
+## Sample Output
 
 2Y Swap locks in ~4.18% fixed → All-in debt cost ≈ 5.68%
 5Y Swap locks in ~4.17% fixed → All-in ≈ 5.67%
