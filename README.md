@@ -18,7 +18,29 @@ Medium-term hedge (5Y Swap) – Covers full construction + early operations
 Long-term hedge (10Y Swap) – Full project life cycle protection
 
 
+## Sample Output (Run the code above):
 
+2Y Swap locks in ~4.18% fixed → All-in debt cost ≈ 5.68%
+5Y Swap locks in ~4.17% fixed → All-in ≈ 5.67%
+10Y Swap locks in 4.44% fixed → All-in ≈ 5.94%
+
+Key Insights & Recommendation
+Curve Shape: Mildly humped. The 5-year swap rate is the lowest, suggesting the market expects moderate BoE easing in the medium term followed by normalization.
+Risk Analysis:
+
+Floating Rate Risk: High — SONIA could rise to 5%+ if energy inflation persists.
+Swap Break Costs: Highest on 10Y if rates fall sharply.
+Basis Risk: SONIA vs Gilt spread is currently tight.
+
+Best Strategy for Thames Valley Solar Farm:
+
+Enter a 5-Year SONIA Swap (Pay Fixed 4.17%) on £180m notional.
+Rationale: Best balance of cost (lowest fixed rate) and hedge horizon. Covers construction + first few years of revenue stabilization. Saves ~£1.2m+ annually vs unhedged if SONIA rises.
+
+Sensitivity:
+
+If BoE cuts rates by 50bps in 2026 → 5Y swap becomes expensive (mark-to-market loss).
+If rates rise → Significant savings vs floating debt.
 
 
 
